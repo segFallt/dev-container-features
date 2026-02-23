@@ -1,10 +1,19 @@
-# Claude Code Dev Container Feature
+# Dev Container Features
 
-A [dev container feature](https://containers.dev/implementors/features/) that installs the [Claude Code](https://docs.anthropic.com/en/docs/claude-code) CLI for AI-assisted development.
+A collection of reusable [dev container features](https://containers.dev/implementors/features/) for common development workflows.
 
-## Usage
+| Feature | Description |
+|---------|-------------|
+| [Claude Code](#claude-code) | Claude Code CLI for AI-assisted development |
+| [Documentation as Code](#documentation-as-code) | PlantUML + Mermaid diagram-as-code environment |
 
-Add this feature to your `devcontainer.json`:
+---
+
+## Claude Code
+
+Installs the [Claude Code](https://docs.anthropic.com/en/docs/claude-code) CLI for AI-assisted development.
+
+### Usage
 
 ```json
 {
@@ -14,7 +23,7 @@ Add this feature to your `devcontainer.json`:
 }
 ```
 
-## Options
+### Options
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
@@ -23,9 +32,9 @@ Add this feature to your `devcontainer.json`:
 | `installSystemDeps` | boolean | `false` | Install networking/system tools (`iptables`, `ipset`, `iproute2`, `dnsutils`) |
 | `nodeVersion` | string | `none` | Node.js version to install (e.g., `20`, `22`, `lts`). Set to `none` to skip. |
 
-## Examples
+### Examples
 
-### Minimal
+#### Minimal
 
 ```json
 {
@@ -37,7 +46,7 @@ Add this feature to your `devcontainer.json`:
 
 This installs the latest Claude Code CLI and writes default permissions. Node.js must already be available in the base image or via another feature.
 
-### With Node.js
+#### With Node.js
 
 ```json
 {
@@ -49,19 +58,7 @@ This installs the latest Claude Code CLI and writes default permissions. Node.js
 }
 ```
 
-### With system dependencies
-
-```json
-{
-    "features": {
-        "ghcr.io/segFallt/dev-container-features/claude-code:1": {
-            "installSystemDeps": true
-        }
-    }
-}
-```
-
-### Pinned version, no default permissions
+#### Pinned version, no default permissions
 
 ```json
 {
@@ -74,7 +71,7 @@ This installs the latest Claude Code CLI and writes default permissions. Node.js
 }
 ```
 
-## What's Installed
+### What's Installed
 
 - **Claude Code CLI** (`claude`) - the AI-assisted development tool
 - **VS Code extension** - `anthropic.claude-code` is recommended via `customizations`
@@ -82,12 +79,118 @@ This installs the latest Claude Code CLI and writes default permissions. Node.js
 - **System tools** (optional) - `iptables`, `ipset`, `iproute2`, `dnsutils`
 - **Node.js** (optional) - required runtime for Claude Code if not already present
 
+---
+
+## Documentation as Code
+
+Installs PlantUML, Mermaid CLI, and supporting tools for diagram-as-code documentation workflows.
+
+### Usage
+
+```json
+{
+    "features": {
+        "ghcr.io/segFallt/dev-container-features/documentation-as-code:1": {}
+    }
+}
+```
+
+Node.js and npm must be available (either from the base image, the `node` feature, or by setting `nodeVersion`).
+
+### Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `plantumlVersion` | string | `1.2025.7` | PlantUML JAR version to install |
+| `mermaidVersion` | string | `latest` | `@mermaid-js/mermaid-cli` version to install. Set to `none` to skip. |
+| `nodeVersion` | string | `none` | Node.js version to install (e.g., `20`, `22`, `lts`). Set to `none` to skip. |
+| `includeLibraryBranch` | string | `main` | Branch or tag of the plantUML-components include library repo |
+| `installIncludeLibrary` | boolean | `true` | Whether to clone the PlantUML include library (themes, cloud icons, helpers) |
+
+### Examples
+
+#### With Node.js feature (recommended)
+
+```json
+{
+    "features": {
+        "ghcr.io/devcontainers/features/node:1": {
+            "version": "22"
+        },
+        "ghcr.io/segFallt/dev-container-features/documentation-as-code:1": {}
+    }
+}
+```
+
+#### Self-contained (built-in Node.js)
+
+```json
+{
+    "features": {
+        "ghcr.io/segFallt/dev-container-features/documentation-as-code:1": {
+            "nodeVersion": "22"
+        }
+    }
+}
+```
+
+#### Pinned versions, no include library
+
+```json
+{
+    "features": {
+        "ghcr.io/devcontainers/features/node:1": {
+            "version": "22"
+        },
+        "ghcr.io/segFallt/dev-container-features/documentation-as-code:1": {
+            "plantumlVersion": "1.2025.7",
+            "mermaidVersion": "11.4.1",
+            "installIncludeLibrary": false
+        }
+    }
+}
+```
+
+### What's Installed
+
+- **Java 17** (OpenJDK) - runtime for PlantUML
+- **Graphviz** - graph layout engine used by PlantUML
+- **PlantUML JAR** at `/plantuml/plantuml.jar`
+- **Mermaid CLI** (`mmdc`) - renders Mermaid diagrams from the command line
+- **Puppeteer config** at `/plantuml/puppeteer-config.json` - headless Chrome flags for `mmdc`
+- **PlantUML include library** (optional) at `/plantuml/include-library/` - themes, cloud icons, and helpers from [plantUML-components](https://github.com/segFallt/plantUML-components)
+- **Chromium dependencies** - system libraries required by Puppeteer's bundled Chromium
+- **VS Code extensions** - PlantUML, Mermaid preview/editing, and Markdown support
+- **Node.js** (optional) - if not already provided by another feature
+
+### Rendering Diagrams
+
+#### Mermaid
+
+Use the Puppeteer config when rendering with `mmdc`:
+
+```bash
+mmdc -p /plantuml/puppeteer-config.json -i input.mmd -o output.svg
+```
+
+#### PlantUML
+
+```bash
+java -jar /plantuml/plantuml.jar -tsvg input.puml
+```
+
+### Include Library
+
+When `installIncludeLibrary` is `true` (the default), the [plantUML-components](https://github.com/segFallt/plantUML-components) repo is cloned to `/plantuml/include-library/`. The VS Code PlantUML extension is configured to use `/plantuml/include-library/_global` as an include path, so you can reference shared themes and icons directly in your `.puml` files.
+
+---
+
 ## Publishing
 
-This feature is published to GHCR (GitHub Container Registry) automatically on push to `main`. Consumers reference features using semantic versioning:
+Features are published to GHCR (GitHub Container Registry) automatically on push to `main`. Consumers reference features using semantic versioning:
 
-- `ghcr.io/segFallt/dev-container-features/claude-code:1` - latest v1.x.x
-- `ghcr.io/segFallt/dev-container-features/claude-code:1.0` - latest v1.0.x
-- `ghcr.io/segFallt/dev-container-features/claude-code:1.0.0` - exact version
+- `ghcr.io/segFallt/dev-container-features/<feature>:1` - latest v1.x.x
+- `ghcr.io/segFallt/dev-container-features/<feature>:1.0` - latest v1.0.x
+- `ghcr.io/segFallt/dev-container-features/<feature>:1.0.0` - exact version
 
-The version in `src/claude-code/devcontainer-feature.json` determines the published tag. Bump it to release a new version.
+The version in each `src/<feature>/devcontainer-feature.json` determines the published tag. Bump it to release a new version.
