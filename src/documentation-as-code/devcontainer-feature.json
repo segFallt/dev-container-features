@@ -39,9 +39,7 @@
             "extensions": [
                 "yzhang.markdown-all-in-one",
                 "jebbs.plantuml",
-                "d8aware.vscode-mermaid-extension",
-                "vstirbu.vscode-mermaid-preview",
-                "bierner.markdown-mermaid"
+                "vstirbu.vscode-mermaid-preview"
             ],
             "settings": {
                 "plantuml.jar": "/plantuml/plantuml.jar",
