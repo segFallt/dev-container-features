@@ -1,7 +1,7 @@
 {
     "name": "Claude Code",
     "id": "claude-code",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Installs the Claude Code CLI for AI-assisted development",
     "options": {
         "version": {
@@ -23,11 +23,6 @@
             "type": "string",
             "default": "none",
             "description": "Node.js version to install (e.g., '20', '22', 'lts'). Set to 'none' to skip."
-        },
-        "installDockerInDocker": {
-            "type": "boolean",
-            "default": true,
-            "description": "Install Docker-in-Docker (ghcr.io/devcontainers/features/docker-in-docker:2) for container operations"
         }
     },
     "installsAfter": [
