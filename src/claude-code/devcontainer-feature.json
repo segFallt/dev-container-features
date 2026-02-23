@@ -23,10 +23,16 @@
             "type": "string",
             "default": "none",
             "description": "Node.js version to install (e.g., '20', '22', 'lts'). Set to 'none' to skip."
+        },
+        "installDockerInDocker": {
+            "type": "boolean",
+            "default": true,
+            "description": "Install Docker-in-Docker (ghcr.io/devcontainers/features/docker-in-docker:2) for container operations"
         }
     },
     "installsAfter": [
-        "ghcr.io/devcontainers/features/common-utils"
+        "ghcr.io/devcontainers/features/common-utils",
+        "ghcr.io/devcontainers/features/docker-in-docker"
     ],
     "customizations": {
         "vscode": {

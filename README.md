@@ -31,6 +31,7 @@ Installs the [Claude Code](https://docs.anthropic.com/en/docs/claude-code) CLI f
 | `installDefaultPermissions` | boolean | `true` | Install default `.claude/settings.local.json` with common permissions (`cat`, `docker run`, `docker exec`, `find`) |
 | `installSystemDeps` | boolean | `false` | Install networking/system tools (`iptables`, `ipset`, `iproute2`, `dnsutils`) |
 | `nodeVersion` | string | `none` | Node.js version to install (e.g., `20`, `22`, `lts`). Set to `none` to skip. |
+| `installDockerInDocker` | boolean | `true` | Install Docker-in-Docker (`ghcr.io/devcontainers/features/docker-in-docker:2`) for container operations |
 
 ### Examples
 
@@ -71,10 +72,23 @@ This installs the latest Claude Code CLI and writes default permissions. Node.js
 }
 ```
 
+#### Without Docker-in-Docker
+
+```json
+{
+    "features": {
+        "ghcr.io/segFallt/dev-container-features/claude-code:1": {
+            "installDockerInDocker": false
+        }
+    }
+}
+```
+
 ### What's Installed
 
 - **Claude Code CLI** (`claude`) - the AI-assisted development tool
 - **VS Code extension** - `anthropic.claude-code` is recommended via `customizations`
+- **Docker-in-Docker** (default) - via `ghcr.io/devcontainers/features/docker-in-docker:2`, making `docker run`/`docker exec` permissions immediately usable
 - **Default permissions** (optional) - `.claude/settings.local.json` with safe defaults for `cat`, `docker run`, `docker exec`, and `find`
 - **System tools** (optional) - `iptables`, `ipset`, `iproute2`, `dnsutils`
 - **Node.js** (optional) - required runtime for Claude Code if not already present

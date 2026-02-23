@@ -6,12 +6,14 @@ VERSION="${VERSION:-latest}"
 INSTALLDEFAULTPERMISSIONS="${INSTALLDEFAULTPERMISSIONS:-true}"
 INSTALLSYSTEMDEPS="${INSTALLSYSTEMDEPS:-false}"
 NODEVERSION="${NODEVERSION:-none}"
+INSTALLDOCKERINDOCKER="${INSTALLDOCKERINDOCKER:-true}"
 
 echo "Installing Claude Code feature..."
 echo "  Version: ${VERSION}"
 echo "  Install default permissions: ${INSTALLDEFAULTPERMISSIONS}"
 echo "  Install system deps: ${INSTALLSYSTEMDEPS}"
 echo "  Node.js version: ${NODEVERSION}"
+echo "  Install Docker-in-Docker: ${INSTALLDOCKERINDOCKER}"
 
 # ---------- Helper ----------
 apt_get_update_if_needed() {
