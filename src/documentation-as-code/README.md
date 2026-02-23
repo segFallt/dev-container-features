@@ -27,9 +27,7 @@ Installs PlantUML, Mermaid CLI, and supporting tools for diagram-as-code documen
 
 - `yzhang.markdown-all-in-one`
 - `jebbs.plantuml`
-- `d8aware.vscode-mermaid-extension`
 - `vstirbu.vscode-mermaid-preview`
-- `bierner.markdown-mermaid`
 
 
 
