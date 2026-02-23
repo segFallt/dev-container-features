@@ -19,6 +19,7 @@ Installs the Claude Code CLI for AI-assisted development
 | installDefaultPermissions | Install default .claude/settings.local.json with common permissions (cat, docker run, docker exec, find) | boolean | true |
 | installSystemDeps | Install networking/system tools (iptables, ipset, iproute2, dnsutils) | boolean | false |
 | nodeVersion | Node.js version to install (e.g., '20', '22', 'lts'). Set to 'none' to skip. | string | none |
+| installDockerInDocker | Install Docker-in-Docker (ghcr.io/devcontainers/features/docker-in-docker:2) for container operations | boolean | true |
 
 ## Customizations
 
