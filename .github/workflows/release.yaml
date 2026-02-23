@@ -1,0 +1,66 @@
+name: "Release dev container features & generate docs"
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+  packages: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: "Publish features"
+        uses: devcontainers/action@v1
+        with:
+          publish-features: "true"
+          base-path-to-features: "./src"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  docs:
+    needs: publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: "Generate documentation"
+        uses: devcontainers/action@v1
+        with:
+          generate-docs: "true"
+          base-path-to-features: "./src"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create PR for documentation
+        id: push_image_info
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          echo "Start."
+          # Configure git identity
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+
+          # Stage documentation changes
+          git add -A
+          if git diff-index --quiet HEAD --; then
+            echo "No documentation changes to commit."
+            exit 0
+          fi
+
+          # Create a branch and PR for the docs update
+          BRANCH_NAME="automated-docs-update-$GITHUB_RUN_ID"
+          git checkout -b "$BRANCH_NAME"
+          git commit -m "docs: auto-update feature documentation [skip ci]"
+          git push --set-upstream origin "$BRANCH_NAME"
+          gh pr create --title "docs: auto-update feature documentation" \
+            --body "Auto-generated documentation update from release workflow." \
+            --base main --head "$BRANCH_NAME"

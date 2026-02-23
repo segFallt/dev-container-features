@@ -1,0 +1,31 @@
+name: "Test dev container features"
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: "Validate devcontainer-feature.json"
+        uses: devcontainers/action@v1
+        with:
+          validate-only: "true"
+          base-path-to-features: "./src"
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: "Run tests"
+        uses: devcontainers/action@v1
+        with:
+          run-tests: "true"
+          base-path-to-features: "./src"
+          base-path-to-feature-tests: "./test"

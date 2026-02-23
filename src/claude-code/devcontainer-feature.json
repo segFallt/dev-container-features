@@ -1,0 +1,38 @@
+{
+    "name": "Claude Code",
+    "id": "claude-code",
+    "version": "1.0.0",
+    "description": "Installs the Claude Code CLI for AI-assisted development",
+    "options": {
+        "version": {
+            "type": "string",
+            "default": "latest",
+            "description": "Version of Claude Code to install (e.g., 'latest' or a specific version)"
+        },
+        "installDefaultPermissions": {
+            "type": "boolean",
+            "default": true,
+            "description": "Install default .claude/settings.local.json with common permissions (cat, docker run, docker exec, find)"
+        },
+        "installSystemDeps": {
+            "type": "boolean",
+            "default": false,
+            "description": "Install networking/system tools (iptables, ipset, iproute2, dnsutils)"
+        },
+        "nodeVersion": {
+            "type": "string",
+            "default": "none",
+            "description": "Node.js version to install (e.g., '20', '22', 'lts'). Set to 'none' to skip."
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/common-utils"
+    ],
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "anthropic.claude-code"
+            ]
+        }
+    }
+}
