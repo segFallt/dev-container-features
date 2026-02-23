@@ -1,0 +1,10 @@
+{
+    "test": {
+        "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+        "features": {
+            "documentation-as-code": {
+                "nodeVersion": "22"
+            }
+        }
+    }
+}

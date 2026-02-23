@@ -1,0 +1,61 @@
+{
+    "name": "Documentation as Code",
+    "id": "documentation-as-code",
+    "version": "1.0.0",
+    "description": "Installs PlantUML, Mermaid CLI, and supporting tools for diagram-as-code documentation workflows",
+    "options": {
+        "plantumlVersion": {
+            "type": "string",
+            "default": "1.2025.7",
+            "description": "PlantUML JAR version to install"
+        },
+        "mermaidVersion": {
+            "type": "string",
+            "default": "latest",
+            "description": "@mermaid-js/mermaid-cli version to install. Set to 'none' to skip."
+        },
+        "nodeVersion": {
+            "type": "string",
+            "default": "none",
+            "description": "Node.js version to install (e.g., '20', '22', 'lts'). Set to 'none' to skip."
+        },
+        "includeLibraryBranch": {
+            "type": "string",
+            "default": "main",
+            "description": "Branch or tag of the plantUML-components include library repo to clone"
+        },
+        "installIncludeLibrary": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether to clone the PlantUML include library (themes, cloud icons, helpers)"
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/common-utils",
+        "ghcr.io/devcontainers/features/node"
+    ],
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "yzhang.markdown-all-in-one",
+                "jebbs.plantuml",
+                "d8aware.vscode-mermaid-extension",
+                "vstirbu.vscode-mermaid-preview",
+                "bierner.markdown-mermaid"
+            ],
+            "settings": {
+                "plantuml.jar": "/plantuml/plantuml.jar",
+                "plantuml.exportFormat": "svg",
+                "plantuml.diagramsRoot": "docs",
+                "plantuml.exportOutDir": "out",
+                "plantuml.includepaths": [
+                    "/plantuml/include-library/_global"
+                ],
+                "files.associations": {
+                    "*.puml": "plantuml",
+                    "*.plantuml": "plantuml"
+                }
+            }
+        }
+    }
+}
