@@ -18,8 +18,6 @@ Installs PlantUML, Mermaid CLI, and supporting tools for diagram-as-code documen
 | plantumlVersion | PlantUML JAR version to install | string | 1.2025.7 |
 | mermaidVersion | @mermaid-js/mermaid-cli version to install. Set to 'none' to skip. | string | latest |
 | nodeVersion | Node.js version to install (e.g., '20', '22', 'lts'). Set to 'none' to skip. | string | none |
-| includeLibraryBranch | Branch or tag of the plantUML-components include library repo to clone | string | main |
-| installIncludeLibrary | Whether to clone the PlantUML include library (themes, cloud icons, helpers) | boolean | true |
 
 ## Customizations
 

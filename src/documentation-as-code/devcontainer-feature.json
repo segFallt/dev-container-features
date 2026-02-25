@@ -1,7 +1,7 @@
 {
     "name": "Documentation as Code",
     "id": "documentation-as-code",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Installs PlantUML, Mermaid CLI, and supporting tools for diagram-as-code documentation workflows",
     "options": {
         "plantumlVersion": {
@@ -18,16 +18,6 @@
             "type": "string",
             "default": "none",
             "description": "Node.js version to install (e.g., '20', '22', 'lts'). Set to 'none' to skip."
-        },
-        "includeLibraryBranch": {
-            "type": "string",
-            "default": "main",
-            "description": "Branch or tag of the plantUML-components include library repo to clone"
-        },
-        "installIncludeLibrary": {
-            "type": "boolean",
-            "default": true,
-            "description": "Whether to clone the PlantUML include library (themes, cloud icons, helpers)"
         }
     },
     "installsAfter": [
@@ -46,9 +36,6 @@
                 "plantuml.exportFormat": "svg",
                 "plantuml.diagramsRoot": "docs",
                 "plantuml.exportOutDir": "out",
-                "plantuml.includepaths": [
-                    "/plantuml/include-library/_global"
-                ],
                 "files.associations": {
                     "*.puml": "plantuml",
                     "*.plantuml": "plantuml"
