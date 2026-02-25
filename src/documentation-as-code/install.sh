@@ -5,15 +5,11 @@ set -e
 PLANTUMLVERSION="${PLANTUMLVERSION:-1.2025.7}"
 MERMAIDVERSION="${MERMAIDVERSION:-latest}"
 NODEVERSION="${NODEVERSION:-none}"
-INCLUDELIBRARYBRANCH="${INCLUDELIBRARYBRANCH:-main}"
-INSTALLINCLUDELIBRARY="${INSTALLINCLUDELIBRARY:-true}"
 
 echo "Installing Documentation as Code feature..."
 echo "  PlantUML version: ${PLANTUMLVERSION}"
 echo "  Mermaid CLI version: ${MERMAIDVERSION}"
 echo "  Node.js version: ${NODEVERSION}"
-echo "  Include library branch: ${INCLUDELIBRARYBRANCH}"
-echo "  Install include library: ${INSTALLINCLUDELIBRARY}"
 
 # ---------- Helper ----------
 apt_get_update_if_needed() {
@@ -118,19 +114,10 @@ cat > /plantuml/puppeteer-config.json <<'EOF'
 }
 EOF
 
-# ---------- 6. Clone include library (if requested) ----------
-if [ "${INSTALLINCLUDELIBRARY}" = "true" ]; then
-    echo "Cloning PlantUML include library (branch: ${INCLUDELIBRARYBRANCH})..."
-    git clone --depth 1 --branch "${INCLUDELIBRARYBRANCH}" \
-        https://github.com/segFallt/plantUML-components.git \
-        /plantuml/include-library
-    rm -rf /plantuml/include-library/.git
-fi
-
-# ---------- 7. Set ownership ----------
+# ---------- 6. Set ownership ----------
 chown -R "${_REMOTE_USER}:${_REMOTE_USER}" /plantuml
 
-# ---------- 8. Install Mermaid CLI ----------
+# ---------- 7. Install Mermaid CLI ----------
 if [ "${MERMAIDVERSION}" = "none" ]; then
     echo "Skipping Mermaid CLI install (mermaidVersion=none)."
 elif ! command -v npm &>/dev/null; then

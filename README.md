@@ -117,8 +117,6 @@ Node.js and npm must be available (either from the base image, the `node` featur
 | `plantumlVersion` | string | `1.2025.7` | PlantUML JAR version to install |
 | `mermaidVersion` | string | `latest` | `@mermaid-js/mermaid-cli` version to install. Set to `none` to skip. |
 | `nodeVersion` | string | `none` | Node.js version to install (e.g., `20`, `22`, `lts`). Set to `none` to skip. |
-| `includeLibraryBranch` | string | `main` | Branch or tag of the plantUML-components include library repo |
-| `installIncludeLibrary` | boolean | `true` | Whether to clone the PlantUML include library (themes, cloud icons, helpers) |
 
 ### Examples
 
@@ -147,7 +145,7 @@ Node.js and npm must be available (either from the base image, the `node` featur
 }
 ```
 
-#### Pinned versions, no include library
+#### Pinned versions
 
 ```json
 {
@@ -157,8 +155,7 @@ Node.js and npm must be available (either from the base image, the `node` featur
         },
         "ghcr.io/segFallt/dev-container-features/documentation-as-code:1": {
             "plantumlVersion": "1.2025.7",
-            "mermaidVersion": "11.4.1",
-            "installIncludeLibrary": false
+            "mermaidVersion": "11.4.1"
         }
     }
 }
@@ -171,7 +168,6 @@ Node.js and npm must be available (either from the base image, the `node` featur
 - **PlantUML JAR** at `/plantuml/plantuml.jar`
 - **Mermaid CLI** (`mmdc`) - renders Mermaid diagrams from the command line
 - **Puppeteer config** at `/plantuml/puppeteer-config.json` - headless Chrome flags for `mmdc`
-- **PlantUML include library** (optional) at `/plantuml/include-library/` - themes, cloud icons, and helpers from [plantUML-components](https://github.com/segFallt/plantUML-components)
 - **Chromium dependencies** - system libraries required by Puppeteer's bundled Chromium
 - **VS Code extensions** - PlantUML, Mermaid preview/editing, and Markdown support
 - **Node.js** (optional) - if not already provided by another feature
@@ -191,10 +187,6 @@ mmdc -p /plantuml/puppeteer-config.json -i input.mmd -o output.svg
 ```bash
 java -jar /plantuml/plantuml.jar -tsvg input.puml
 ```
-
-### Include Library
-
-When `installIncludeLibrary` is `true` (the default), the [plantUML-components](https://github.com/segFallt/plantUML-components) repo is cloned to `/plantuml/include-library/`. The VS Code PlantUML extension is configured to use `/plantuml/include-library/_global` as an include path, so you can reference shared themes and icons directly in your `.puml` files.
 
 ---
 
