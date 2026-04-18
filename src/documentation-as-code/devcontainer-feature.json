@@ -1,7 +1,7 @@
 {
     "name": "Documentation as Code",
     "id": "documentation-as-code",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "Installs PlantUML, Mermaid CLI, and supporting tools for diagram-as-code documentation workflows",
     "options": {
         "plantumlVersion": {
@@ -33,9 +33,6 @@
             ],
             "settings": {
                 "plantuml.jar": "/plantuml/plantuml.jar",
-                "plantuml.exportFormat": "svg",
-                "plantuml.diagramsRoot": "docs",
-                "plantuml.exportOutDir": "out",
                 "files.associations": {
                     "*.puml": "plantuml",
                     "*.plantuml": "plantuml"
